@@ -354,3 +354,7 @@ $contact->tags()->attach($validated['tag_ids'] ?? []);
 
 1. Fortifyの設定変更後も、ログイン・登録後に`/home`へ遷移する問題が発生した。<br>
    →`RouteServiceProvider`やセッションの状態を確認し、キャッシュクリア・セッション削除を行って動作を確認した。
+2. 翻訳ファイルの設定
+
+- `lang/ja/auth.php`：認証関連のエラーメッセージを日本語にする
+- `lang/ja/validation.php`：バリデーションエラーメッセージを日本語にする
