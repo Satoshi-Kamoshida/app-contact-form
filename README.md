@@ -262,12 +262,13 @@ sail npm run dev
 
 ## 環境構築後のアプリ制作手順・詰まった所
 
-### migration・model・seederの作成
+### 1. migration・model・seederの作成
 
 1. テーブル作成（外部キー・ユニーク制約設定）
 2. モデル作成（リレーション設定）
 3. Factoryの設定（お問い合わせ20件登録用）
 4. 各Seeder及びDatabaseSeederの作成（初期データ投入）
+5. テスト、コード品質の確認
 
 > ⚠️ **詰まった所**
 
@@ -296,3 +297,19 @@ $contact->tags()->attach($tagIds);
 
 事前提供bladeの置換の際、デフォルトのresourcesを削除し、welcome.blade.phpを削除した事により、初期のExample Testが機能しなかった。<br>
 →画面実装時にルートとテストを修正する。
+
+### 2. お問い合わせ入力ページの作成
+
+1. `ContactController` を作成
+2. blade確認
+3. ContactController@index でカテゴリ・タグを取得
+4. ルーターの修正
+5. 動作確認
+6. Feature Testを作成(ステータス、View、categories、tags)
+7. テスト、コード品質の確認
+
+> ⚠️ **詰まった所**
+
+1. 動作確認の際、CSSが崩れていた。<br>
+   初期にプロジェクトディレクトリ名等を修正した際、指定するディレクトリが変わってしまい、Viteの開発サーバーが起動していなかった事が原因。<br>
+   →開発用のプロジェクトディレクトリをコマンドで確認し、再度サーバーを起動。問題解決した。
