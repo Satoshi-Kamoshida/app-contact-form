@@ -1,8 +1,8 @@
 # App Contact Form
 
 <div align="right">
-<strong>開発者：鴨志田 悟</strong><br>
-<strong>開発期間：2026年9月6日〜9月13日</strong>
+<p><strong>開発者：鴨志田 悟</strong></p>
+<p><strong>開発期間：2026年9月6日〜9月13日</strong></p>
 </div>
 
 ## 概要
@@ -112,7 +112,7 @@ sail artisan --version
 sail mysql --version
 ```
 
-**技術スタックが指定と異なった為、下記要領にてPHP/MySQLを変更**<br>
+<strong><span style="color: red;">技術スタックが指定と異なった為、下記要領にてPHP/MySQLを変更</span></strong>
 
 compose.yamlを確認<br>
 ↓<br>
@@ -213,7 +213,7 @@ export default {
 
 **Viteの起動**
 ※Vite：CSSやJavaScriptなどのフロントエンドファイルを監視・ビルドしてくれる開発用サーバー<br>
-※**注意点**：CSS・JavaScriptなどのフロントエンド処理が発生する場合に、**別のターミナル**で起動する。
+<span style="color: red;">注意点：CSS・JavaScriptなどのフロントエンド処理が発生する場合に、別のターミナルで起動する。</span>
 
 ```bash
 sail npm run dev
