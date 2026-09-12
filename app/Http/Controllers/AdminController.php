@@ -12,7 +12,6 @@ class AdminController extends Controller
     {
         $query = Contact::with(['category', 'tags']);
 
-        // キーワード検索
         if ($request->filled('keyword')) {
             $keyword = $request->keyword;
 
@@ -23,17 +22,14 @@ class AdminController extends Controller
             });
         }
 
-        // 性別検索
         if ($request->filled('gender')) {
             $query->where('gender', $request->gender);
         }
 
-        // カテゴリ検索
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->category_id);
         }
 
-        // 日付検索
         if ($request->filled('date')) {
             $query->whereDate('created_at', $request->date);
         }
@@ -43,5 +39,19 @@ class AdminController extends Controller
         $categories = Category::all();
 
         return view('admin.index', compact('contacts', 'categories'));
+    }
+
+    public function show(Contact $contact)
+    {
+        $contact->load(['category', 'tags']);
+
+        return view('admin.show', compact('contact'));
+    }
+
+    public function destroy(Contact $contact)
+    {
+        $contact->delete();
+
+        return redirect('/admin');
     }
 }
