@@ -224,40 +224,40 @@ sail npm run dev
 
 ## Git開発におけるルーティーン
 
-1. Issueの検討
+1. Issueの検討<br>
 
-2. mainへ移動
+2. mainへ移動<br>
    git switch main
 
-3. mainを最新化
+3. mainを最新化<br>
    git pull origin main
 
-4. Issue用ブランチを作成
+4. Issue用ブランチを作成<br>
    git switch -c feature/作業内容
 
-5. 作業
+5. 作業<br>
 
-6. 変更点の確認
+6. 変更点の確認<br>
    git status
 
-7. ステージング
+7. ステージング<br>
    git add .
 
-8. コミット
+8. コミット<br>
    git commit -m "作業内容"
 
-9. GitHubへPush
+9. GitHubへPush<br>
    git push -u origin feature/作業内容
 
-10. GitHubでPR作成・Merge
+10. GitHubでPR作成・Merge<br>
 
-11. mainへ戻る
+11. mainへ戻る<br>
     git switch main
 
-12. mainを最新化
+12. mainを最新化<br>
     git pull origin main
 
-13. 作業ブランチを削除
+13. 作業ブランチを削除<br>
     git branch -d feature/作業内容
 
 ## 環境構築後のアプリ制作手順・詰まった所
@@ -271,7 +271,7 @@ sail npm run dev
 
 > ⚠️ **詰まった所**
 
-1. １〜３個のタグをランダムに取得し、中間テーブルに登録する。
+1. **１〜３個のタグをランダムに取得し、中間テーブルに登録する。**
 
 ```php
 $tagIds = Tag::inRandomOrder()
@@ -280,7 +280,7 @@ $tagIds = Tag::inRandomOrder()
 $contact->tags()->attach($tagIds);
 ```
 
-2. 外国人データでseedしてしまった為、config/app.phpを変更した。
+2. **外国人データでseedしてしまった為、config/app.phpを変更した。**
 
 ```php
 'faker_locale' => 'en_US',
@@ -292,7 +292,7 @@ $contact->tags()->attach($tagIds);
 'faker_locale' => 'ja_JP',
 ```
 
-3. Sail testがFail（HTTPステータス：500）
+3. **Sail testがFail（HTTPステータス：500）**
 
 事前提供bladeの置換の際、デフォルトのresourcesを削除し、welcome.blade.phpを削除した事により、初期のExample Testが機能しなかった。<br>
 →画面実装時にルートとテストを修正する。
