@@ -221,3 +221,78 @@ sail npm run dev
 ## ER図
 
 ![ER図](doc/確認テスト-ER図_最終版.png)
+
+## Git開発におけるルーティーン
+
+1. Issueの検討
+
+2. mainへ移動
+   git switch main
+
+3. mainを最新化
+   git pull origin main
+
+4. Issue用ブランチを作成
+   git switch -c feature/作業内容
+
+5. 作業
+
+6. 変更点の確認
+   git status
+
+7. ステージング
+   git add .
+
+8. コミット
+   git commit -m "作業内容"
+
+9. GitHubへPush
+   git push -u origin feature/作業内容
+
+10. GitHubでPR作成・Merge
+
+11. mainへ戻る
+    git switch main
+
+12. mainを最新化
+    git pull origin main
+
+13. 作業ブランチを削除
+    git branch -d feature/作業内容
+
+## 環境構築後のアプリ制作手順・詰まった所
+
+### migration・model・seederの作成
+
+1. テーブル作成（外部キー・ユニーク制約設定）
+2. モデル作成（リレーション設定）
+3. Factoryの設定（お問い合わせ20件登録用）
+4. 各Seeder及びDatabaseSeederの作成（初期データ投入）
+
+> ⚠️ **詰まった所**
+
+1. １〜３個のタグをランダムに取得し、中間テーブルに登録する。
+
+```php
+$tagIds = Tag::inRandomOrder()
+    ->limit(fake()->numberBetween(1, 3))
+    ->pluck('id');
+$contact->tags()->attach($tagIds);
+```
+
+2. 外国人データでseedしてしまった為、config/app.phpを変更した。
+
+```php
+'faker_locale' => 'en_US',
+```
+
+↓<br>
+
+```php
+'faker_locale' => 'ja_JP',
+```
+
+3. Sail testがFail（HTTPステータス：500）
+
+事前提供bladeの置換の際、デフォルトのresourcesを削除し、welcome.blade.phpを削除した事により、初期のExample Testが機能しなかった。<br>
+→画面実装時にルートとテストを修正する。
