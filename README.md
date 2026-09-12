@@ -1,7 +1,7 @@
 # App Contact Form
 
 <div align="right">
-<strong>開発者：鴨志田 悟</strong>
+<strong>開発者：鴨志田 悟</strong><br>
 <strong>開発期間：2026年9月6日〜9月13日</strong>
 </div>
 
