@@ -30,8 +30,9 @@
 
 ## 開発環境URL
 
-- [トップ画面](http://localhost)
 - [phpMyAdmin](http://localhost:8080)
+- [トップ画面](http://localhost)
+- [管理者登録画面](http://localhost/register)
 
 ## 環境構築
 
@@ -338,3 +339,18 @@ $validated['tag_ids'] ?? []
 ```bash
 $contact->tags()->attach($validated['tag_ids'] ?? []);
 ```
+
+### 4. 管理者認証（登録・ログイン・ログアウト）
+
+1. Laravel Fortifyをインストール・設定
+2. 管理者登録画面・ログイン画面を確認
+3. `CreateNewUser`で管理者登録処理とバリデーションを設定
+4. ログイン試行のレート制限を設定
+5. 登録・ログイン後の遷移先を`/admin`に設定
+6. 登録・ログイン・ログアウトのFeature Testを実装
+7. `sail test`、`sail pint --test`で品質確認
+
+> ⚠️ **詰まった所**
+
+1. Fortifyの設定変更後も、ログイン・登録後に`/home`へ遷移する問題が発生した。<br>
+   →`RouteServiceProvider`やセッションの状態を確認し、キャッシュクリア・セッション削除を行って動作を確認した。
