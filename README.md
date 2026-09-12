@@ -31,8 +31,13 @@
 ## 開発環境URL
 
 - [phpMyAdmin](http://localhost:8080)
-- [トップ画面](http://localhost)
+
+## 動作確認URL
+
+- [お問い合わせ入力画面](http://localhost)
 - [管理者登録画面](http://localhost/register)
+- [ログイン画面](http://localhost/login)
+- [管理画面](http://localhost/admin)
 
 ## 環境構築
 
@@ -398,3 +403,53 @@ sail artisan optimize:clear
 ```php
 $request->filled('keyword')
 ```
+
+### 6. 管理画面詳細と削除機能
+
+1. お問い合わせ詳細表示・削除機能のルーティングを実装
+2. Admin Controllerへshow()メソッドを追加<br>
+   関連データを纏めて取得→admin.showへ渡す。
+3. Admin Controllerへdestory()メソッドを追加<br>
+   削除後、管理画面の一覧へリダイレクト
+4. 動作確認
+
+- `/admin` にアクセスしてお問い合わせ一覧が表示されること
+- 「詳細」からお問い合わせ詳細画面へ遷移できること
+- お問い合わせの詳細情報が正しく表示されること
+- 「一覧に戻る」で管理画面へ戻れること
+- 「削除」でお問い合わせを削除できること
+- 削除後、管理画面一覧から対象のお問い合わせが消えること
+
+> ⚠️ **詰まった所(復習)**
+
+- `with()`と`load()`の違いについて
+
+| `with()` / `load()` | `with()`             | `load()`              |
+| ------------------- | -------------------- | --------------------- |
+| タイミング          | モデル取得時         | モデル取得後          |
+| 対象                | クエリ               | 取得済みモデル        |
+| 主な用途            | 一覧など             | 詳細など              |
+| 例                  | `Contact::with(...)` | `$contact->load(...)` |
+
+#### `with()`
+
+**「モデルを取得するときに、リレーションも一緒に取得する」**
+
+```php
+$contacts = Contact::with(['category', 'tags'])->get();
+```
+
+#### `load()`
+
+**「すでに取得したモデルに対して、後からリレーションを取得する」**
+
+```php
+$contact = Contact::find(1);
+
+$contact->load(['category', 'tags']);
+```
+
+#### 覚え方
+
+- `with()` → **取得するとき**
+- `load()` → **取得した後**
