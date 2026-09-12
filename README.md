@@ -112,7 +112,6 @@ sail artisan --version
 sail mysql --version
 ```
 
-> [!WARNING]
 > ⚠️ 技術スタックが指定と異なった為、下記要領にてPHP/MySQLを変更
 
 compose.yamlを確認<br>
@@ -129,9 +128,7 @@ sail up -d
 ```
 
 ↓<br>
-バージョン確認
-
-````
+バージョン確認<br>
 
 **MySQLのバージョン変更によるエラー**<br>
 MySQL 8.4から8.0へ変更した際、既存のMySQLボリュームに8.4のデータが残っていたため、MySQLのダウングレードエラーが発生。下記コマンドでボリュームを削除し、再構築。
@@ -139,7 +136,7 @@ MySQL 8.4から8.0へ変更した際、既存のMySQLボリュームに8.4のデ
 ```bash
 sail down -v
 sail up -d
-````
+```
 
 ### 5. データベース接続確認
 
@@ -215,8 +212,7 @@ export default {
 **Viteの起動**
 ※Vite：CSSやJavaScriptなどのフロントエンドファイルを監視・ビルドしてくれる開発用サーバー<br>
 
-> [!NOTE]
-> 注意点：CSS・JavaScriptなどのフロントエンド処理が発生する場合に、別のターミナルで起動する。
+> ⚠️ 注意点：CSS・JavaScriptなどのフロントエンド処理が発生する場合に、別のターミナルで起動する。
 
 ```bash
 sail npm run dev
