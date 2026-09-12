@@ -262,7 +262,7 @@ sail npm run dev
 
 ## 環境構築後のアプリ制作手順・詰まった所
 
-### migration・model・seederの作成
+### 1. migration・model・seederの作成
 
 1. テーブル作成（外部キー・ユニーク制約設定）
 2. モデル作成（リレーション設定）
@@ -298,7 +298,7 @@ $contact->tags()->attach($tagIds);
 事前提供bladeの置換の際、デフォルトのresourcesを削除し、welcome.blade.phpを削除した事により、初期のExample Testが機能しなかった。<br>
 →画面実装時にルートとテストを修正する。
 
-### お問い合わせ入力ページの作成
+### 2. お問い合わせ入力ページの作成
 
 1. `ContactController` を作成
 2. blade確認
