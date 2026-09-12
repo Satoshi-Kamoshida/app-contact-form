@@ -112,7 +112,8 @@ sail artisan --version
 sail mysql --version
 ```
 
-<strong><span style="color: red;">技術スタックが指定と異なった為、下記要領にてPHP/MySQLを変更</span></strong>
+> [!WARNING]
+> ⚠️ 技術スタックが指定と異なった為、下記要領にてPHP/MySQLを変更
 
 compose.yamlを確認<br>
 ↓<br>
@@ -213,7 +214,9 @@ export default {
 
 **Viteの起動**
 ※Vite：CSSやJavaScriptなどのフロントエンドファイルを監視・ビルドしてくれる開発用サーバー<br>
-<span style="color: red;">注意点：CSS・JavaScriptなどのフロントエンド処理が発生する場合に、別のターミナルで起動する。</span>
+
+> [!NOTE]
+> 注意点：CSS・JavaScriptなどのフロントエンド処理が発生する場合に、別のターミナルで起動する。
 
 ```bash
 sail npm run dev
