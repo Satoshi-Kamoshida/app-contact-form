@@ -568,10 +568,10 @@ if ($request->filled('gender') && $request->gender != 0) {
     $query->where('gender', $request->gender);}
 ```
 
-2. CSVをHTTPレスポンスとして生成してダウンロードする仕組み
+2. CSVをHTTPレスポンスとして生成してダウンロードする仕組み<br>
    **StreamedResponse**<br>
-   CSVなどのデータをレスポンスとしてストリーム出力するための仕組み
+   CSVなどのデータをレスポンスとしてストリーム出力するための仕組み<br>
    **php://output**<br>
-   サーバー上のファイルではなく、HTTPレスポンスの出力先へ書き込む
+   サーバー上のファイルではなく、HTTPレスポンスの出力先へ書き込む<br>
    **fputcsv()**<br>
    配列のデータをCSVの1行として出力する
