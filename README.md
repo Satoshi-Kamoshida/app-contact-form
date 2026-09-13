@@ -492,3 +492,86 @@ $tag->contacts()->detach();
     <input type="text" name="last_name" placeholder="例: 太郎">
     ```
     bladeに問題無し、データ投入時のエラーと判断。別ブランチ由来のエラーの為、最終チェック時に修正する。
+
+### 8. CSVエクスポート実装
+
+1. CSVエクスポート用のForm Requestを作成
+
+- エクスポート時の検索条件をバリデーション
+  | 項目 | ルール |
+  |---|---|
+  | keyword | nullable / string / max:255 |
+  | gender | nullable / integer / in:0,1,2,3 |
+  | category_id | nullable / integer / exists:categories,id |
+  | date | nullable / date |
+
+2. CSVエクスポート処理を実装
+
+- `ContactController.php` に `export()` メソッドを追加
+- お問い合わせデータを取得
+- 検索条件絞り込みの設定
+- データ取得（新着順）
+- CSV形式で出力
+
+3. ルーティングを追加
+   認証状態での操作の為、authミドルウェア内へ追加する。
+
+4. コンタクトコントローラーへCSVの出力内容を設定
+
+- UTF-8 BOM付きで出力<br>
+  **※Excelで日本語CSVを開いた際の文字化けを防ぐため、CSVの先頭にUTF-8 BOMを付ける。**
+
+```php
+fwrite($handle, "\xEF\xBB\xBF");
+```
+
+- CSVヘッダーを設定
+- 性別を数値から文字列へ変換
+- カテゴリをIDからカテゴリ名へ変換
+
+5. Feature Testを追加
+
+- CSVが正常に出力されること
+- BOM・ヘッダーを確認
+- キーワード検索がCSVに反映されること
+- 性別指定のバリデーションエラー確認
+
+6. 動作確認
+
+- ブラウザから検索
+- 検索結果を確認
+- エクスポートボタンからCSVを出力
+- CSVの内容を確認
+
+> ⚠️ **詰まった所**
+>
+> 1. 動作確認の際、検索機能が機能していない事が発覚した。Issue #12で検索機能を実装した際に、ブラウザ遷移異常トラブルがあり、その時に動作確認が漏れてしまった事が本エラーの原因の為、Issueに立ち返っての実装を今後注意する。<br>
+>    他ブランチのトラブルだが、CSVエクスポートの動作確認に必要な為、本ブランチ内での修正とした。<br>
+>    原因は`AdminController.php`の下記のコードと判明した。<br>
+
+```php
+if ($request->filled('gender')) {
+    $query->where('gender', $request->gender);}
+```
+
+ブラウザの検索時URLを確認すると、`gender=`で止まっており、上記コードでは<br>
+
+```php
+$query->where('gender', 0);
+```
+
+が実行されてしまう。<br>
+従い、下記に変更した所、検索機能は正常になった。<br>
+
+```php
+if ($request->filled('gender') && $request->gender != 0) {
+    $query->where('gender', $request->gender);}
+```
+
+2. CSVをHTTPレスポンスとして生成してダウンロードする仕組み
+   **StreamedResponse**<br>
+   CSVなどのデータをレスポンスとしてストリーム出力するための仕組み
+   **php://output**<br>
+   サーバー上のファイルではなく、HTTPレスポンスの出力先へ書き込む
+   **fputcsv()**<br>
+   配列のデータをCSVの1行として出力する
