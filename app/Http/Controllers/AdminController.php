@@ -23,7 +23,7 @@ class AdminController extends Controller
             });
         }
 
-        if ($request->filled('gender')) {
+        if ($request->filled('gender') && $request->gender != 0) {
             $query->where('gender', $request->gender);
         }
 
