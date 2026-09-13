@@ -576,7 +576,7 @@ if ($request->filled('gender') && $request->gender != 0) {
    **fputcsv()**<br>
    配列のデータをCSVの1行として出力する
 
-## 9. APIお問い合わせ一覧取得
+### 9. APIお問い合わせ一覧取得
 
 1. API用Controllerを作成
 2. API用Form Requestを作成
@@ -604,3 +604,22 @@ Category::inRandomOrder()->first()->id
    性別の検索条件不一致を指定した際、422が確認できなかった。<br>
    原因を確認した所、API側のJsonリクエストが機能していない可能性があり、Headerタブにて、
    Accept:application/Jsonにした結果、422レスポンスを確認出来た。
+
+### 10. API-CRUD操作の実装
+
+1. Controller実装
+2. Form Requestによるバリデーション
+3. API Resourceによるレスポンス整形
+4. APIルート設定
+5. Feature Test実装
+6. Postmanによる動作確認
+   ※postmanテストの結果は、/doc/images内へ格納しております。
+
+    > ⚠️ **詰まった所**
+
+7. `noContent();`：レスポンス無し<br>
+   下記のコードは、「処理は正常に完了した。でもレスポンスとして返す本文（Body）はありません」
+
+```php
+return response()->noContent();
+```
