@@ -575,3 +575,32 @@ if ($request->filled('gender') && $request->gender != 0) {
    サーバー上のファイルではなく、HTTPレスポンスの出力先へ書き込む<br>
    **fputcsv()**<br>
    配列のデータをCSVの1行として出力する
+
+## 9. APIお問い合わせ一覧取得
+
+1. API用Controllerを作成
+2. API用Form Requestを作成
+3. ContactResource / CategoryResource / TagResourceを作成
+4. API Controllerに一覧取得処理を実装
+5. APIルートを追加
+6. Feature Test<br>
+   ※postmanテストの結果は、/doc/images内へ格納しております。
+
+> ⚠️ **詰まった所**
+
+1. ContactFactoryでカテゴリが存在しないエラー<br>
+   Feature Testの初期実行時に以下のエラーが発生した。<br>
+   原因は ContactFactory で、<br>
+
+```php
+Category::inRandomOrder()->first()->id
+```
+
+としていたため。<br>
+テスト用データベースにCategoryが存在しない状態でContactを作成しようとしていた。<br>
+そのため、Feature Test側でCategoryを先に作成してからContactを作成するようにした。
+
+2. Postmanで422にならなかった。<br>
+   性別の検索条件不一致を指定した際、422が確認できなかった。<br>
+   原因を確認した所、API側のJsonリクエストが機能していない可能性があり、Headerタブにて、
+   Accept:application/Jsonにした結果、422レスポンスを確認出来た。
