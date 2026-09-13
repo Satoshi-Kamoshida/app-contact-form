@@ -453,3 +453,42 @@ $contact->load(['category', 'tags']);
 
 - `with()` → **取得するとき**
 - `load()` → **取得した後**
+
+### 7. タグCRUD実装
+
+1. バリデーションの為、StoreTagRequest／StoreTagRequestを実装。<br>
+   ※タグのバリデーションルール：必須、50文字以内、一意
+2. FormRequestの中に、仕様書指定のmessage()メソッドを実装。<br>
+
+- 未入力の場合：タグ名を入力してください
+- 50文字を超えた場合：タグ名は50文字以内で入力してください
+- 重複している場合：そのタグ名は既に使用されています
+
+3. TagControllerの実装<br>
+   TagControllerにタグのCRUD処理を実装した。<br>
+   ※タグ削除時に、下記にて中間テーブルの関連データを削除してから、本体を削除。
+
+```php
+$tag->contacts()->detach();
+```
+
+4. 管理者認証後操作の為、authミドルウェアグループ内に、resourceを用いてタグCRUD用ルートを実装した。
+5. 動作確認
+
+- タグCRUD
+- タグ名の未入力エラー
+- タグ名50文字超過エラー
+- 重複したタグ名の登録エラー
+- 未認証ユーザーのアクセス制限
+- タグ削除時のcontact_tag関連データ削除
+
+> ⚠️ **詰まった所**
+
+1. 機能テスト実装時に、50文字超過エラーのメッセージ確認にて、PASSしなかった。<br>FormRequestとFeature Testのコードで、半角の差異があり修正→PASSした。
+2. 動作確認の際、姓名が逆になっている事が発覚した。<br>
+   →画面表示かDB由来と判断し、まずbladeを確認<br>
+    ```php
+    <input type="text" name="first_name" placeholder="例: 山田">
+    <input type="text" name="last_name" placeholder="例: 太郎">
+    ```
+    bladeに問題無し、データ投入時のエラーと判断。別ブランチ由来のエラーの為、最終チェック時に修正する。
